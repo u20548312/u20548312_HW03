@@ -10,7 +10,6 @@ namespace u20548312_HW03.Controllers
 {
     public class VideoController : Controller
     {
-        readonly string[] media = { ".MP4", ".AVI", ".WEBM" };
         // GET: Video
         public ActionResult Index()
         {
@@ -22,15 +21,15 @@ namespace u20548312_HW03.Controllers
 
             foreach (string filePath in filePaths)
             {
-                if (filePath.EndsWith(media[0]))
+                if (filePath.EndsWith(".MP4"))
                 {
                     files.Add(new FileModel { FileName = Path.GetFileName(filePath) });
                 }
-                if (filePath.EndsWith(media[1]))
+                if (filePath.EndsWith(".AVI"))
                 {
                     files.Add(new FileModel { FileName = Path.GetFileName(filePath) });
                 }
-                if (filePath.EndsWith(media[2]))
+                if (filePath.EndsWith(".WEBM"))
                 {
                     files.Add(new FileModel { FileName = Path.GetFileName(filePath) });
                 }
