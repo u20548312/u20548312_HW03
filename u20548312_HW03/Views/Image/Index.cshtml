@@ -13,7 +13,7 @@
     {
       <div class="row">
         <div class=" col-lg-4">
-            <img class="gallery a" src="~/Models/@item.FileName" alt="image" height="150" />
+            <img class="gallery a" src="~/App_Data/Uploaded Files/@item.FileName" alt="image" height="150" />
         </div>
         <p>  @Html.DisplayNameFor(model => model.FileName)</p>
         <button type="button" class=" btn-success">@Html.ActionLink("Download", "DownloadFile", new { fileName = item.FileName })</button>
