@@ -1,0 +1,125 @@
+﻿@model PagedList.PagedList<u20548312_HW03.Models.StudentBookVM>
+@using Newtonsoft.Json; 
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Students</h2>
+            @Html.ActionLink("Create New Student", "Create", "students", new { @class = "btn btn-primary pull-right" })
+            <br />
+            <br />
+            <div class=" container" style="background-color: red;">
+                <table style="width: 500px; height: 550px;">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Birthdate</th>
+                            <th>Gender</th>
+                            <th>Class</th>
+                            <th>Point</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var student in Model)
+                            {
+                                <tr>
+                                    <td>@student.name @student.surname</td>
+                                    <td>@student.birthdate</td>
+                                    <td>@student.gender</td>
+                                    <td>@student.tclass</td>
+                                    <td>@student.point</td>
+                                </tr>
+
+
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    No Data Available
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <br />
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="col">
+                <h2>Books</h2>
+                @Html.ActionLink("Create New Book", "Create", "books", new { @class = "btn btn-primary pull-right" })
+                <br />
+                <br />
+                <div class=" container" style="background-color: red;">
+                    <table style="width: 500px; height: 550px;">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Page Count</th>
+                                <th>Point</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var book in Model)
+                                {
+                                    <tr>
+                                        <td>@book.Bname</td>
+                                        <td>@book.pagecount</td>
+                                        <td>@book.gender</td>
+                                        @if (@book.broughtDate == null)
+                                        {
+                                            <td>
+                                                OUT
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td> AVAILABLE</td>
+                                        }
+                                    </tr>
+
+
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        No Data Available
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+</div>
+    <br />
+    <ul class="pagination pagination-lg">
+    @{
+        if (!Model.IsFirstPage)
+        {
+            <li class="page-item"><a class="page-link" href="@Url.Action("Index", "Home", new {  pageIndex= Model.PageNumber -1 })">Prev</a></li>
+        }
+        if (!Model.IsLastPage)
+        {
+            <li class="page-item"><a class="page-link" href="@Url.Action("Index", "Home", new { pageIndex = Model.PageNumber + 1 })">Next</a></li>
+        }
+    }
+</ul>
