@@ -1,0 +1,47 @@
+﻿@model PagedList.PagedList<u20548312_HW03.Models.StudentBookVM>
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Report</h2>
+
+<div>
+    <canvas id="barChart" width="400" height="200"></canvas>
+</div>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var data = @Html.Raw(Json.Encode(Model));
+
+        var labels = data.map(function (item) {
+            return item.BookName;
+        });
+
+        var counts = data.map(function (item) {
+            return item.Count;
+        });
+
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Overdue Books',
+                    data: counts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

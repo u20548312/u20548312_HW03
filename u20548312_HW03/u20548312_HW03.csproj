@@ -161,6 +161,7 @@
     <Compile Include="Models\book.cs">
       <DependentUpon>LibraryDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BookVM.cs" />
     <Compile Include="Models\borrow.cs">
       <DependentUpon>LibraryDb.tt</DependentUpon>
     </Compile>
@@ -183,7 +184,7 @@
     <Compile Include="Models\student.cs">
       <DependentUpon>LibraryDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StudentBookVM.cs" />
+    <Compile Include="Models\StudentVM.cs" />
     <Compile Include="Models\type.cs">
       <DependentUpon>LibraryDb.tt</DependentUpon>
     </Compile>
@@ -284,6 +285,7 @@
     <Content Include="Views\types\Edit.cshtml" />
     <Content Include="Views\types\Index.cshtml" />
     <Content Include="Views\Home\Maintain.cshtml" />
+    <Content Include="Views\Home\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

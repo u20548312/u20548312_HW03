@@ -12,33 +12,94 @@ namespace u20548312_HW03.Controllers
 {
     public class HomeController : Controller
     {
-        int NoElPage = 20;
+        int NoElPage = 10;
         private LibraryEntities db = new LibraryEntities();
-        public ActionResult Index(int? pageIndex)
+        public ActionResult Index(int? pageIndex, int? pageIndex2)
         {
-            var StudBook = (from b in db.books
-                            join br in db.borrows
-                            on b.bookId equals br.bookId
-                            join s in db.students
-                            on br.studentId equals s.studentId
-                            select new StudentBookVM
+            var Stud = (from s in db.students
+                            select new StudentVM
                             {
                                 name = s.name,
                                 surname = s.surname,
                                 birthdate = s.birthdate,
                                 gender = s.gender,
                                 tclass = s.@class,
-                                point = (int)s.point,
-                                Bname = b.name,
-                                pagecount = (int)b.pagecount,
-                                Bpoint = (int)b.point,
-                                takenDate = br.takenDate,
-                                broughtDate = br.broughtDate
+                                point = (int)s.point
                             }).ToList();
 
+            var Book = (from b in db.books
+                            join br in db.borrows
+                            on b.bookId equals br.bookId
+                       select new BookVM
+                       {
+                           Bname = b.name,
+                           pagecount = (int)b.pagecount,
+                           Bpoint = (int)b.point,
+                           takenDate = br.takenDate,
+                           broughtDate = br.broughtDate
+                       }).ToList();
+
             int page = (pageIndex ?? 1);
-            var pStuBo = StudBook.ToPagedList(page, NoElPage);
-            return View(pStuBo);
+            int page2 = (pageIndex2 ?? 1);
+
+            var pStud = Stud.ToPagedList(page, NoElPage);
+            var pBook = Book.ToPagedList(page2, NoElPage);
+
+            var Index = new HVM
+            {
+                Students = pStud,
+                Books = pBook
+            };
+
+           
+            return View(Index);
+        }
+        public ActionResult CreateBook(StudentVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Create a new Book entity and map data from the ViewModel
+                var book = new book
+                {
+                    name = model.name,
+                    pagecount = model.pagecount,
+                    point = model.point
+                };
+
+                // Add the book to the DbContext and save changes
+                db.books.Add(book);
+                db.SaveChanges();
+
+                // Redirect to a view or action after successful creation
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult CreateStudent(StudentVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Create a new Book entity and map data from the ViewModel
+                var stud = new student
+                {
+                    name = model.name,
+                    surname = model.surname,
+                    point = model.point,
+                    birthdate = model.birthdate,
+                    gender = model.gender
+                };
+
+                // Add the book to the DbContext and save changes
+                db.students.Add(stud);
+                db.SaveChanges();
+
+                // Redirect to a view or action after successful creation
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
 
         public ActionResult Maintain(int? pageIndex)
@@ -65,11 +126,28 @@ namespace u20548312_HW03.Controllers
             return View(pStuBo);
         }
 
-        public ActionResult Contact()
+        public ActionResult Report()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var StudBook = (from b in db.books
+                            join br in db.borrows
+                            on b.bookId equals br.bookId
+                            join s in db.students
+                            on br.studentId equals s.studentId
+                            select new StudentVM
+                            {
+                                name = s.name,
+                                surname = s.surname,
+                                birthdate = s.birthdate,
+                                gender = s.gender,
+                                tclass = s.@class,
+                                point = (int)s.point,
+                                Bname = b.name,
+                                pagecount = (int)b.pagecount,
+                                Bpoint = (int)b.point,
+                                takenDate = br.takenDate,
+                                broughtDate = br.broughtDate
+                            }).ToList();
+            return View(StudBook);
         }
     }
 }
