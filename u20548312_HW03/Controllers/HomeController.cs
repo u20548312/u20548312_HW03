@@ -54,16 +54,18 @@ namespace u20548312_HW03.Controllers
            
             return View(Index);
         }
-        public ActionResult CreateBook(StudentVM model)
+
+        [HttpPost]
+        public ActionResult CreateBook(BookVM model)
         {
             if (ModelState.IsValid)
             {
                 // Create a new Book entity and map data from the ViewModel
                 var book = new book
                 {
-                    name = model.name,
+                    name = model.Bname,
                     pagecount = model.pagecount,
-                    point = model.point
+                    point = model.Bpoint
                 };
 
                 // Add the book to the DbContext and save changes
@@ -77,21 +79,23 @@ namespace u20548312_HW03.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public ActionResult CreateStudent(StudentVM model)
         {
             if (ModelState.IsValid)
             {
-                // Create a new Book entity and map data from the ViewModel
+                // Create a new Student entity and map data from the ViewModel
                 var stud = new student
                 {
                     name = model.name,
                     surname = model.surname,
-                    point = model.point,
                     birthdate = model.birthdate,
-                    gender = model.gender
+                    gender = model.gender,
+                    @class = model.tclass,
+                    point = model.point
                 };
 
-                // Add the book to the DbContext and save changes
+                // Add the student  to the DbContext and save changes
                 db.students.Add(stud);
                 db.SaveChanges();
 

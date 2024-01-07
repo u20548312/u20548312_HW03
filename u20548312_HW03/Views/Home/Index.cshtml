@@ -1,5 +1,5 @@
 ﻿@model u20548312_HW03.Models.HVM
-@using Newtonsoft.Json; 
+@using Newtonsoft.Json;
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
@@ -10,12 +10,12 @@
     <div class="row">
         <div class="col">
             <h2>Students</h2>
-            @Html.ActionLink("Create New Student", "CreateStudent", "Home", new { @class = "btn btn-primary pull-right" })
+            <button class="btn btn-primary pull-right" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add Student</button>
             <br />
             <br />
-            <div class=" container" style="background-color: red;">
+            <div class=" container" style="border: 3px solid black; border-radius: 10px; margin-top: 15px; margin-bottom: 15px; background-color: cyan;">
                 <table style="width: 500px; height: 550px;">
-                    <thead>
+                    <thead style=" border-bottom: solid 3px">
                         <tr>
                             <th>Name</th>
                             <th>Birthdate</th>
@@ -55,21 +55,23 @@
             </div>
             <br />
             @Html.PagedListPager((PagedList.IPagedList)Model.Students, page => Url.Action("Index", new { pageIndex = page }),
-            new PagedListRenderOptions {
+            new PagedListRenderOptions
+                 {
                 LiElementClasses = new[] { "needsLoading" },
-                DelimiterBetweenPageNumbers = "|" }                
+                DelimiterBetweenPageNumbers = "|"
+                 }
             )
-           
+
         </div>
 
         <div class="col">
             <h2>Books</h2>
-            @Html.ActionLink("Create New Book", "CreateBook", "Home", new { @class = "btn btn-primary pull-right" })
+            <button class="btn btn-primary pull-right" data-bs-toggle="modal" data-bs-target ="#createBookModal">Create New Book</button>
             <br />
             <br />
-            <div class="container" style="">
-                <table style="width: 500px; height: 550px; background-color: cyan; border: 3px; margin: 4px, 4px, 4px, 4px">
-                    <thead>
+            <div class="container" style="border: 3px solid black; border-radius: 10px; margin-top: 15px; margin-bottom: 15px; background-color: cyan;">
+                <table style="width: 500px; height: 550px; ">
+                    <thead style=" border-bottom: solid 3px">
                         <tr>
                             <th>Name</th>
                             <th>Page Count</th>
@@ -123,7 +125,100 @@
 
         </div>
     </div>
+</div>
+
+
+<!--Create Student Modal -->
+<div class="modal fade" id="addStudentModal" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStudentModalLabel">Add New Student</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add student form goes here -->
+                @using (Html.BeginForm("CreateStudent", "Home", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Students.First().name)
+                        @Html.EditorFor(model => model.Students.First().name, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Students.First().surname)
+                        @Html.EditorFor(model => model.Students.First().surname, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Students.First().birthdate)
+                        @Html.EditorFor(model => model.Students.First().birthdate, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Students.First().gender)
+                        @Html.EditorFor(model => model.Students.First().gender, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Students.First().tclass)
+                        @Html.EditorFor(model => model.Students.First().tclass, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Students.First().point)
+                        @Html.EditorFor(model => model.Students.First().point, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <!-- Add other form fields as needed -->
+                    <button type="submit" class="btn btn-primary">Add Student</button>
+                }
+                <br />
+            </div>
+        </div>
     </div>
-    <br />
-    
-    
+</div>
+
+<!--Create Book Modal-->
+<div class="modal" id="createBookModal" tabindex="-1" role="dialog" aria-labelledby="createBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createBookModalLabel">Create New Book</h5>
+                <button type="button" class="close"  data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("CreateBook", "Home", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Books.First().Bname)
+                        @Html.EditorFor(model => model.Books.First().Bname, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Books.First().pagecount)
+                        @Html.EditorFor(model => model.Books.First().pagecount, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Books.First().Bpoint)
+                        @Html.EditorFor(model => model.Books.First().Bpoint, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <!-- Add other form fields as needed -->
+                    <button type="submit" class="btn btn-primary">Create Book</button>
+                }
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
