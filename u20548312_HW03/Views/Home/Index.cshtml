@@ -5,127 +5,129 @@
     ViewBag.Title = "Index";
 }
 
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>Students</h2>
-            <button class="btn btn-primary pull-right" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add Student</button>
-            <br />
-            <br />
-            <div class=" container" style="border: 3px solid black; border-radius: 10px; margin-top: 15px; margin-bottom: 15px; background-color: cyan;">
-                <table style="width: 500px; height: 550px;">
-                    <thead style=" border-bottom: solid 3px">
-                        <tr>
-                            <th>Name</th>
-                            <th>Birthdate</th>
-                            <th>Gender</th>
-                            <th>Class</th>
-                            <th>Point</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Students != null && Model.Students.Any())
-                        {
-                            foreach (var student in Model.Students)
-                            {
-                                <tr>
-                                    <td>@student.name @student.surname</td>
-                                    <td>@student.birthdate</td>
-                                    <td>@student.gender</td>
-                                    <td>@student.tclass</td>
-                                    <td>@student.point</td>
-                                </tr>
-
-
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td>
-                                    No Data Available
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-
-                </table>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2>Students</h2>
+                <button class="btn btn-primary pull-right" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add Student</button>
                 <br />
-            </div>
-            <br />
-            @Html.PagedListPager((PagedList.IPagedList)Model.Students, page => Url.Action("Index", new { pageIndex = page }),
-            new PagedListRenderOptions
-                 {
-                LiElementClasses = new[] { "needsLoading" },
-                DelimiterBetweenPageNumbers = "|"
-                 }
-            )
+                <br />
+                <div class=" container" style="border: 3px solid black; border-radius: 10px; margin-top: 15px; margin-bottom: 15px; background-color: cyan;">
+                    <table style="width: 500px; height: 550px;">
+                        <thead style=" border-bottom: solid 3px">
+                            <tr>
+                                <th>Name</th>
+                                <th>Birthdate</th>
+                                <th>Gender</th>
+                                <th>Class</th>
+                                <th>Point</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Students != null && Model.Students.Any())
+                            {
+                                foreach (var student in Model.Students)
+                                {
+                                    <tr>
+                                        <td>@student.name @student.surname</td>
+                                        <td>@student.birthdate</td>
+                                        <td>@student.gender</td>
+                                        <td>@student.tclass</td>
+                                        <td>@student.point</td>
+                                    </tr>
 
-        </div>
 
-        <div class="col">
-            <h2>Books</h2>
-            <button class="btn btn-primary pull-right" data-bs-toggle="modal" data-bs-target ="#createBookModal">Create New Book</button>
-            <br />
-            <br />
-            <div class="container" style="border: 3px solid black; border-radius: 10px; margin-top: 15px; margin-bottom: 15px; background-color: cyan;">
-                <table style="width: 500px; height: 550px; ">
-                    <thead style=" border-bottom: solid 3px">
-                        <tr>
-                            <th>Name</th>
-                            <th>Page Count</th>
-                            <th>Point</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Books != null && Model.Books.Any())
-                        {
-                            foreach (var book in Model.Books)
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td>@book.Bname</td>
-                                    <td>@book.pagecount</td>
-                                    <td>@book.Bpoint</td>
-                                    @if (@book.broughtDate == null)
-                                    {
-                                        <td>
-                                            OUT
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td> AVAILABLE</td>
-                                    }
+                                    <td>
+                                        No Data Available
+                                    </td>
                                 </tr>
-
-
                             }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td>
-                                    No Data Available
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
+                    <br />
+                </div>
+                <br />
+                @Html.PagedListPager((PagedList.IPagedList)Model.Students, page => Url.Action("Index", new { pageIndex = page }),
+                new PagedListRenderOptions
+                     {
+                    LiElementClasses = new[] { "needsLoading" },
+                    DelimiterBetweenPageNumbers = "|"
+                     }
+                )
+
             </div>
-            <br />
-            @Html.PagedListPager(Model.Books, page2 => Url.Action("Index", new { pageIndex2 = page2 }),
-           new PagedListRenderOptions
-           {
-               LiElementClasses = new[] { "needsLoading" },
-               DelimiterBetweenPageNumbers = "|"
-           })
 
+            <div class="col">
+                <h2>Books</h2>
+                <button class="btn btn-primary pull-right" data-bs-toggle="modal" data-bs-target="#createBookModal">Create New Book</button>
+                <br />
+                <br />
+                <div class="container" style="border: 3px solid black; border-radius: 10px; margin-top: 15px; margin-bottom: 15px; background-color: cyan;">
+                    <table style="width: 500px; height: 550px; ">
+                        <thead style=" border-bottom: solid 3px">
+                            <tr>
+                                <th>Name</th>
+                                <th>Page Count</th>
+                                <th>Point</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Books != null && Model.Books.Any())
+                            {
+                                foreach (var book in Model.Books)
+                                {
+                                    <tr>
+                                        <td>@book.Bname</td>
+                                        <td>@book.pagecount</td>
+                                        <td>@book.Bpoint</td>
+                                        @if (@book.broughtDate == null)
+                                        {
+                                            <td>
+                                                OUT
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td> AVAILABLE</td>
+                                        }
+                                    </tr>
+
+
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        No Data Available
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+                <br />
+                @Html.PagedListPager(Model.Books, page2 => Url.Action("Index", new { pageIndex2 = page2 }),
+               new PagedListRenderOptions
+               {
+                   LiElementClasses = new[] { "needsLoading" },
+                   DelimiterBetweenPageNumbers = "|"
+               })
+
+            </div>
         </div>
     </div>
-</div>
+</section>
+
 
 
 <!--Create Student Modal -->
@@ -175,11 +177,18 @@
                     <!-- Add other form fields as needed -->
                     <button type="submit" class="btn btn-primary">Add Student</button>
                 }
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
                 <br />
             </div>
         </div>
     </div>
 </div>
+
 
 <!--Create Book Modal-->
 <div class="modal" id="createBookModal" tabindex="-1" role="dialog" aria-labelledby="createBookModalLabel" aria-hidden="true">
